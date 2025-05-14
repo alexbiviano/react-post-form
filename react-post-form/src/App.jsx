@@ -107,7 +107,7 @@ function App() {
           </div>
           <button type="submit" className="btn btn-primary">Invia</button>
         </form>
-      </div>
+      </div>  
 
 
     </>
