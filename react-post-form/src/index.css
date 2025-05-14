@@ -7,4 +7,41 @@
   margin: 20px auto; 
 }  
 
+.alert {  
+  margin-bottom: 20px;  
+  padding: 10px;  
+  border-radius: 4px;   
+}  
 
+.form-label {  
+  font-weight: bold;  
+  margin-bottom: 5px; 
+}  
+
+.form-control {  
+  border: 1px solid #ced4da; 
+  border-radius: 4px; 
+  padding: 10px; 
+  transition: border-color 0.3s;  
+}  
+
+.form-control:focus {  
+  border-color: #80bdff;  
+  outline: none; 
+}  
+
+.btn-primary {  
+  background-color: #007bff;  
+  border: none;  
+  padding: 10px 15px; 
+  border-radius: 4px;   
+  color: white; 
+}  
+
+.btn-primary:hover {  
+  background-color: #0056b3; 
+}  
+
+.form-check-label {  
+  margin-left: 5px;  
+}  
