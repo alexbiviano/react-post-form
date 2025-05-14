@@ -1,35 +1,117 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import axios from 'axios';
+
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const endPoint = ('https://67c5b4f3351c081993fb1ab6.mockapi.io/api/posts');
+
+  const [formPosts, setFormPosts] = useState({
+    author: '',
+    title: '',
+    body: '',
+    public: false
+  })
+
+  const [alert, setAlert] = useState({ type: '', message: '', alert: '' });
+
+
+  function handleFormPosts(event) {
+    const value =
+      event.target.type === 'checkbox' ?
+        event.target.checked : event.target.value;
+
+    setFormPosts((formPosts) => ({
+      ...formPosts,
+      [event.target.name]: value,
+    }));
+  };
+
+  function savePost(event) {
+    event.preventDefault();
+
+    console.log(formPosts);
+
+
+    axios.post(endPoint, formPosts)
+      .then(res => {
+        console.log(res.posts);
+        setAlert({
+          type: 'Corretto',
+          message: 'Post aggiunto con successo!',
+          alert: 'Post aggiunto con successo!'
+
+        });
+      })
+      .catch(error => {
+        console.log(error);
+        setAlert({
+          type: 'Sbagliato',
+          message: 'Invio del post non riuscito!',
+          alert: 'Invio del post non riuscito!'
+
+        });
+      });
+
+  }
+
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className='container bg-info'>
+        {alert.message && (
+          <div className={`alert alert-${alert.type}`}>
+            {alert.message}
+
+          </div>
+        )}
+        <form onSubmit={savePost}>
+          <div className="mb-3">
+            <label className="form-label">Autore</label>
+            <input type="text"
+              name='author'
+              value={formPosts.author}
+              onChange={handleFormPosts}
+              placeholder='Inserisci autore'
+              className="form-control" />
+          </div>
+
+          <div className="mb-3">
+            <label className="form-label">Titolo</label>
+            <input type="text"
+              name='title'
+              value={formPosts.title}
+              onChange={handleFormPosts}
+              placeholder='Inserisci titolo'
+              className="form-control" />
+          </div>
+
+          <div className="mb-3">
+            <label className="form-label">Testo</label>
+            <input type="text"
+              name='body'
+              value={formPosts.body}
+              onChange={handleFormPosts}
+              placeholder='Inserisci testo'
+              className="form-control" />
+          </div>
+
+          <div className="mb-3 form-check">
+            <input type="checkbox"
+              name='public'
+              checked={formPosts.public}
+              onChange={handleFormPosts}
+              id='public'
+              className="form-check-input" />
+            <label className="form-check-label">Disponibile</label>
+          </div>
+          <button type="submit" className="btn btn-primary">Invia</button>
+        </form>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+
+
     </>
   )
 }
 
-export default App
+export default App;
